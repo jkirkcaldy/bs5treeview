@@ -20,10 +20,10 @@
     t.extend(l.prototype, {
         init: function () {
             (this.tree = []),
-                (this.nodes = []),
+                (this.tree = []),
                 this.settings.data && (this.settings.data.isPrototypeOf(String) && (this.settings.data = t.parseJSON(this.settings.data)), (this.tree = t.extend(!0, [], this.settings.data)), delete this.settings.data),
                 t(this.element).addClass("bstreeview"),
-                this.initData({ nodes: this.tree });
+                this.initData({ tree: this.tree });
             var i = this;
             this.build(t(this.element), this.tree, 0),
                 t(this.element).on("click", ".list-group-item", function (s) {
@@ -32,11 +32,11 @@
                 });
         },
         initData: function (e) {
-            if (e.nodes) {
+            if (e.tree) {
                 var i = e,
                     s = this;
-                t.each(e.nodes, function (t, e) {
-                    (e.nodeId = s.nodes.length), (e.parentId = i.nodeId), s.nodes.push(e), e.nodes && s.initData(e);
+                t.each(e.tree, function (t, e) {
+                    (e.nodeId = s.tree.length), (e.parentId = i.nodeId), s.tree.push(e), e.tree && s.initData(e);
                 });
             }
         },
@@ -50,7 +50,7 @@
                         .attr("data-bs-target", "#" + n.itemIdPrefix + g.nodeId)
                         .attr("style", "padding-left:" + l)
                         .attr("aria-level", s);
-                    if (g.nodes) {
+                    if (g.tree) {
                         var c = t(o).addClass(g.expanded ? n.settings.expandIcon : n.settings.collapseIcon);
                         h.append(c);
                     }
@@ -58,9 +58,9 @@
                         var f = t(r).addClass(g.icon);
                         h.append(f);
                     }
-                    if ((h.append(g.text), g.href && h.attr("href", g.href), g.class && h.addClass(g.class), g.id && h.attr("id", g.id), e.append(h), g.nodes)) {
+                    if ((h.append(g.node), g.href && h.attr("href", g.href), g.class && h.addClass(g.class), g.id && h.attr("id", g.id), e.append(h), g.tree)) {
                         var p = t(d).attr("id", n.itemIdPrefix + g.nodeId);
-                        e.append(p), n.build(p, g.nodes, s);
+                        e.append(p), n.build(p, g.tree, s);
                         if (g.expanded) p.addClass(n.settings.expandClass);
                     }
                 });
